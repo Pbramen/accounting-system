@@ -18,6 +18,7 @@ from typing import List, Union, Optional
 from uuid import uuid4, UUID
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -33,6 +34,7 @@ from django_ledger.models.invoice import InvoiceModel
 from django_ledger.models.ledger import LedgerModel
 from django_ledger.models.mixins import CreateUpdateMixIn
 from django_ledger.models.unit import EntityUnitModel
+from django_ledger.models.category import CategoryModel
 from django_ledger.models.utils import lazy_loader
 
 UserModel = get_user_model()
@@ -501,7 +503,8 @@ class TransactionModelAbstract(CreateUpdateMixIn):
 
     cleared = models.BooleanField(default=False, verbose_name=_('Cleared'))
     reconciled = models.BooleanField(default=False, verbose_name=_('Reconciled'))
-
+    
+    category = models.ForeignKey(CategoryModel, verbose_name=_('Category'), null=True, on_delete=models.SET_NULL)
     objects = TransactionModelManager()
 
     class Meta:
@@ -540,6 +543,26 @@ class TransactionModelAbstract(CreateUpdateMixIn):
             raise TransactionModelValidationError(
                 message=_('Cannot transact on root accounts')
             )
+
+
+# ------------------ START of Custom Code ------------------------
+
+
+class CustomTransactionModelManager(TransactionModelManager):
+    def for_category(self, category: Union[CategoryModel, int, str], contains: Optional[str] = None):
+        qs = self.get_queryset()
+        if isinstance(category, int):
+            return qs.filter(category_id = int)
+        elif isinstance(category, str):
+            return qs.filter(category__name = category)
+        return qs.filter(category = category)
+
+
+TransactionModelAbstract.catagories = models.ForeignKey(CategoryModel, null=True, verbose_name=_('Category'), on_delete=models.SET_NULL)
+TransactionModelAbstract.objects = CustomTransactionModelManager()
+# setattr(TransactionModelManager, 'for_category', for_category)
+
+# ------------------ END of Custom Code ------------------------
 
 
 class TransactionModel(TransactionModelAbstract):
@@ -590,3 +613,5 @@ def transactionmodel_presave(instance: TransactionModel, **kwargs):
 
 
 pre_save.connect(transactionmodel_presave, sender=TransactionModel)
+
+
