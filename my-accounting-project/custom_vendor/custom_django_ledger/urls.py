@@ -1,5 +1,5 @@
 """
-URL configuration for app project.
+URL configuration for custom_django_ledger project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -15,18 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from .settings import DEV_MODE
+from django.urls import path
+from . import views
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
+urlpatterns = [    
+    path('index/', views.homePage, name='custom index')
 ]
-
-if DEV_MODE:
-    # add new urls for development branch here
-    dev_urls = [
-        path('dev/ledger/', include('django_ledger.urls')),
-        path('dev/ledger/custom/', include('custom_django_ledger.urls')),
-    ]
-    urlpatterns.extend(dev_urls)
-
