@@ -25,8 +25,8 @@ urlpatterns = [
 if DEV_MODE:
     # add new urls for development branch here
     dev_urls = [
-        path('dev/ledger/', include('django_ledger.urls')),
-        path('dev/ledger/custom/', include('custom_django_ledger.urls')),
+        path('dev/ledger/', include('django_ledger.urls', namespace='django-ledger')),
+        path('dev/ledger/custom/', include('custom_django_ledger.urls', namespace='custom-django-ledger')),
     ]
     urlpatterns.extend(dev_urls)
 

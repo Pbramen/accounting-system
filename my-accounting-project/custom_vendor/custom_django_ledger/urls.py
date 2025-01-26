@@ -14,10 +14,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path
 from . import views
 
+app_name = 'custom_django_ledger'
 urlpatterns = [    
-    path('index/', views.homePage, name='custom index')
+    path('<slug:entity_slug>/category/', views.ViewCategories.as_view(), name='category_view'),
+    path('<slug:entity_slug>/category/<str:msg>', views.ViewCategories.as_view(), name='category_view'),
+
+    path('<slug:entity_slug>/category/create/', views.CreateCategory.as_view(), name='category_create'),
+
+    path('<slug:entity_slug>/category/<int:pk>/', views.UpdateSingleCategory.as_view(), name='category_update'),
+    path('<slug:entity_slug>/category/<int:pk>/<str:msg>/', views.UpdateSingleCategory.as_view(), name='category_update')
+    
 ]
