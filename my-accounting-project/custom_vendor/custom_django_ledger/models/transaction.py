@@ -1,4 +1,9 @@
-from django.db import models
+'''
+    Custom Transaction Proxy to extend base functionality of Django-ledger's transaction model class.
+
+    Adds a new field: category
+        -> Grouping at transaction layer
+'''
 from django_ledger.models import transaction # from third party 
 from category import CategoryModel
 from typing import Union
