@@ -1,0 +1,29 @@
+{% extends "custom_django_ledger/base.html" %}
+
+{% block content %}
+	{% if msg %}
+		<div>{{msg}}</div>
+	{% endif %}
+	
+	<table>
+
+		<thead>
+			<th>Name</th>
+			<th>Description</th>
+			<th></th>
+		</thead>
+
+		<tbody>
+		{% for c in category %}
+			<tr>
+				<td>{{c.name}}</td>
+				<td>{{c.description}}</td>
+				<td><a href="{{c.get_absolute_url}}">Edit</a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+
+	</table>
+	
+{% endblock content %}
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{% block title %}
+			<title>Document</title>
+		{% endblock title %}
+		{% block head_script %}
+			{% comment %}
+				import js files (use defer)
+			{% endcomment %}
+		{% endblock head_script %}
+	</head>
+	<body>
+		{% block content %}
+		{% comment %}
+			Main content appears here
+		{% endcomment %}
+		{% endblock content %}
+	
+		{% block body_script %}
+		{% comment %}
+			JS files to embed
+		{% endcomment %}
+		{% endblock body_script %}
+
+	</body>
+
+	{% block footer %}
+	{% comment %}
+		Add Optional footer here
+	{% endcomment %}
+	{% endblock footer %}
+	
+</html>

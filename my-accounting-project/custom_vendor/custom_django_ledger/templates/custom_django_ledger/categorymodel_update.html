@@ -1,0 +1,16 @@
+{% extends "custom_django_ledger/base.html" %}
+
+{% block content %}
+
+    {% if msg %}
+        <div>
+            {{msg}}
+        </div>
+    {% endif %}
+    
+    <form method='POST' action=''>
+        {% csrf_token %}
+        {{form}}
+        <button type='submit'>Save Changes</button>
+    </form>
+{% endblock content %}

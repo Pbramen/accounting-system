@@ -1,0 +1,10 @@
+{% extends "custom_django_ledger/base.html" %}
+
+{% block content %}
+
+    <form method='POST' action=''>
+        {% csrf_token %}
+        {{form}}
+        <button>Add</button>
+    </form>
+{% endblock content %}
