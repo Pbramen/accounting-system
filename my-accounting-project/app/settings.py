@@ -13,14 +13,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import sys
 import os
-from pprint import pprint
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # include packages for third party vendors
 sys.path.insert(0, os.path.join(BASE_DIR, 'vendor/django-ledger'))
 sys.path.insert(1, os.path.join(BASE_DIR, 'custom_vendor'))
-pprint(sys.path)
+
 # dev mode for url testing
 DEV_MODE = os.environ.get('DJANGO_DEV_MODE', 'True') == 'True'
 
@@ -33,7 +33,7 @@ SECRET_KEY = 'django-insecure-fah5uon4cfk9%mv!l%ibi8oih5p7ed)fm%q)(vbdn#yu^9g0+j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
